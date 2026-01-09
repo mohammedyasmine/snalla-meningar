@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Snälla meningar</title>
+<style>
+  body {
+    font-family: "Comic Sans MS", Arial, sans-serif;
+    text-align: center;
+    padding: 40px;
+    background: linear-gradient(120deg, #a1c4fd, #c2e9fb);
+    color: #333;
+  }
+  h1 {
+    font-size: 36px;
+    color: #ff6f61;
+    margin-bottom: 30px;
+  }
+  #messageBox {
+    font-size: 28px;
+    padding: 30px;
+    margin: 20px auto;
+    width: 85%;
+    max-width: 700px;
+    background: #fff;
+    border-radius: 25px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.5s, transform 0.5s, opacity 0.5s;
+  }
+  #nextBtn {
+    padding: 20px 40px;
+    font-size: 24px;
+    background: #ffb347;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    margin-top: 20px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    transition: transform 0.3s, background 0.3s;
+  }
+  #nextBtn:hover {
+    background: #ffcc70;
+    transform: scale(1.05);
+  }
+  .small-note {
+    opacity: 0.8;
+    font-size: 14px;
+    margin-top: 16px;
+  }
+</style>
+</head>
+<body>
+  <h1>💛 Snälla meningar 💛</h1>
+  <div id="messageBox">Tryck på knappen för en mening</div>
+  <button id="nextBtn">Nästa mening</button>
+  
+<script>
+  // ===== 500 riktiga meningar (100 per kategori) =====
+  const k1 = ['Du är viktig.', 'Du är bra som du är.', 'Du duger.', 'Du är värdefull.', 'Du räcker till.', 'Du är tillräcklig.', 'Du betyder något.', 'Du har ett värde.', 'Du är okej.', 'Du är inte fel.', 'Du är bra nog.', 'Du är unik.', 'Du är speciell.', 'Du är värd respekt.', 'Du är värd att må bra.', 'Du är värd snälla ord.', 'Du är värd omtanke.', 'Du är värd värme.', 'Du är viktig varje dag.', 'Du är inte osynlig.', 'Du är bra även när det känns svårt.', 'Du är bra även när du tvivlar.', 'Du är bra även när du är tyst.', 'Du är bra även när du inte orkar.', 'Du är bra utan att prestera.', 'Du är bra bara genom att vara du.', 'Du är inte för mycket.', 'Du är inte för lite.', 'Du är lagom.', 'Du är okej precis nu.', 'Du får ta plats.', 'Du får vara dig själv.', 'Du behöver inte ändra dig.', 'Du duger som du är.', 'Du är inte konstig.', 'Du är inte jobbig.', 'Du är inte i vägen.', 'Du har rätt att finnas.', 'Du har rätt att vara här.', 'Du är viktig här.', 'Du är värdefull även när ingen säger det.', 'Du är värdefull även när du gör fel.', 'Du är värdefull även när du misslyckas.', 'Du är värdefull även när du är ledsen.', 'Du är värdefull även när du är trött.', 'Du är värdefull varje dag.', 'Du är värdefull just nu.', 'Du är värdefull som du är.', 'Du är värdefull utan krav.', 'Du är värdefull utan att bevisa något.', 'Du är bra på ditt sätt.', 'Du har bra sidor.', 'Du har något fint i dig.', 'Du har något viktigt i dig.', 'Du är mer än du tror.', 'Du är mer än en dålig dag.', 'Du är mer än dina misstag.', 'Du är mer än dina betyg.', 'Du är mer än andras åsikter.', 'Du är mer än det som känns svårt.', 'Du är okej att vara som du är idag.', 'Du är okej även om du inte orkar.', 'Du är okej även om du är ledsen.', 'Du är okej även om du är arg.', 'Du är okej även om du är rädd.', 'Du är okej även om du är osäker.', 'Du är okej även om du tvivlar.', 'Du är okej även när det känns rörigt.', 'Du är okej även när allt inte är bra.', 'Du är okej precis nu.', 'Du är värd att bli lyssnad på.', 'Du är värd att bli sedd.', 'Du är värd att bli tagen på allvar.', 'Du är värd att bli bemött snällt.', 'Du är värd att bli respekterad.', 'Du är värd att känna dig trygg.', 'Du är värd lugn.', 'Du är värd glädje.', 'Du är värd vänlighet.', 'Du är värd kärlek.', 'Du är bra även när ingen märker det.', 'Du är bra även när ingen applåderar.', 'Du är bra även när det är tyst.', 'Du är bra även när du är ensam.', 'Du är bra även när du är osäker.', 'Du är bra även när du tvekar.', 'Du är bra även när du tar det lugnt.', 'Du är bra även när du bara finns.', 'Du är bra idag.', 'Du är bra just nu.', 'Du är tillräcklig idag.', 'Du är tillräcklig just nu.', 'Du är tillräcklig som du är.', 'Du räcker till mer än du tror.', 'Du räcker till även idag.', 'Du räcker till även när det är svårt.', 'Du räcker till utan krav.', 'Du räcker till precis nu.', 'Du är nog.', 'Du är viktig.'];
+  const k2 = ['Det är okej att ha en dålig dag.', 'Det är okej att inte må bra idag.', 'Du måste inte vara glad hela tiden.', 'Det är okej att känna sig ledsen.', 'Det är okej att vara trött.', 'Det är okej att känna sig tom.', 'Det är okej att känna mycket.', 'Det är okej att känna lite.', 'Det är okej att inte veta hur man mår.', 'Det är okej att vara som du är idag.', 'Du gör så gott du kan.', 'Det räcker att du försöker.', 'Du behöver inte orka allt.', 'En sak i taget räcker.', 'Det är okej att ta en paus.', 'Det är okej att vila.', 'Du får ta det lugnt.', 'Du behöver inte skynda.', 'Du behöver inte prestera just nu.', 'Det är okej att sakta ner.', 'Du är inte svag för att det känns jobbigt.', 'Du är inte dum för att du mår så här.', 'Du är inte konstig för att du känner så.', 'Du är inte ensam om att ha jobbiga dagar.', 'Många känner så ibland.', 'Det är mänskligt att må dåligt ibland.', 'Det är okej att ha en tung stund.', 'Det är okej att det känns rörigt.', 'Det är okej att inte ha svar.', 'Du behöver inte lösa allt nu.', 'Den här dagen behöver inte vara perfekt.', 'Den här dagen går över.', 'Den här känslan kommer att ändras.', 'Allt behöver inte kännas bra idag.', 'Det är okej att bara ta sig igenom dagen.', 'Det räcker att du finns.', 'Du duger även på dåliga dagar.', 'Du är bra även när det är svårt.', 'Du är okej även när du inte orkar.', 'Du är okej även när du är ledsen.', 'Du får andas lugnt.', 'Ta ett andetag i taget.', 'Du kan ta en paus nu.', 'Det är okej att sitta still.', 'Det är okej att vara tyst.', 'Du får vara ifred en stund.', 'Du får ta hand om dig själv.', 'Du får vara snäll mot dig själv.', 'Du förtjänar lugn.', 'Du förtjänar vila.', 'Det är okej att gråta.', 'Det är okej om tårar kommer.', 'Det är okej att känna sorg.', 'Det är okej att känna besvikelse.', 'Det är okej att känna sig nere.', 'Det är okej att känna sig arg ibland.', 'Det är okej att känna sig frustrerad.', 'Det är okej att inte orka förklara.', 'Det är okej att bara vara.', 'Du får känna det du känner.', 'Du klarar den här stunden.', 'Du klarar den här minuten.', 'Du klarar den här dagen.', 'Små steg räcker.', 'Du behöver inte vara stark hela tiden.', 'Du får vara trött ibland.', 'Du får känna dig låg ibland.', 'Du är inte ensam just nu.', 'Du är trygg i stunden.', 'Du är okej här och nu.', 'Det är okej att be om hjälp.', 'Det är okej att säga att det är jobbigt.', 'Det är okej att behöva någon.', 'Det är okej att prata med någon.', 'Det är okej att inte vilja prata just nu.', 'Du bestämmer i din takt.', 'Du behöver inte förklara allt.', 'Det är okej att ta tid på sig.', 'Du gör rätt som lyssnar på dig själv.', 'Du tar hand om dig.', 'Den här dagen definierar inte dig.', 'En dålig dag betyder inte ett dåligt liv.', 'Det kommer andra dagar.', 'Det kommer lättare stunder.', 'Det kommer lugnare stunder.', 'Det här är inte för alltid.', 'Det är okej att hoppas lite.', 'Det är okej att bara vila i stunden.', 'Du är trygg just nu.', 'Du är okej just nu.', 'Du behöver inte vara perfekt.', 'Du behöver inte vara glad nu.', 'Du behöver inte låtsas.', 'Du behöver inte le om det inte känns rätt.', 'Du får vara ärlig mot dig själv.', 'Du får ta dagen som den kommer.', 'Du gör ditt bästa idag.', 'Ditt bästa räcker.', 'Du är okej som du är idag.', 'Det är okej att ta en dag i taget.'];
+  const k3 = ['Du är stark.', 'Du är modig.', 'Du klarar mer än du tror.', 'Du har styrka inom dig.', 'Du vågar försöka.', 'Du gör ditt bästa.', 'Du ger inte upp.', 'Du fortsätter framåt.', 'Du är tapper.', 'Du är modig på ditt sätt.', 'Du är stark även när du är trött.', 'Du är modig även när du är rädd.', 'Du är stark även när det är svårt.', 'Du är modig även när det känns jobbigt.', 'Du är stark inuti.', 'Du har kraft i dig.', 'Du har mer styrka än du märker.', 'Du är tuffare än du tror.', 'Du har klarat svåra saker förut.', 'Du klarar detta också.', 'Små steg är också steg.', 'Du får ta ett steg i taget.', 'Det är okej att ta det långsamt.', 'Du gör framsteg.', 'Du lär dig hela tiden.', 'Du växer när du försöker.', 'Du blir starkare av erfarenhet.', 'Du tränar på att bli modig.', 'Du blir bättre med tiden.', 'Du utvecklas varje dag.', 'Du är bra på att kämpa.', 'Du är bra på att försöka igen.', 'Du är bra på att inte ge upp.', 'Du är bra på att ta dig vidare.', 'Du är bra på att hitta kraft.', 'Du är bra på att fortsätta.', 'Du är bra på att stå kvar.', 'Du är bra på att ta nästa steg.', 'Du är bra på att möta det svåra.', 'Du är bra på att våga.', 'Du är stark även när ingen ser det.', 'Du är modig även när ingen märker det.', 'Du är stark även i det tysta.', 'Du är modig även när du tvivlar.', 'Du är stark även när det tar tid.', 'Du är modig även när du tvekar.', 'Du är stark även när det känns tungt.', 'Du är modig även när det är läskigt.', 'Du är stark även när du är osäker.', 'Du är modig även när du inte vet.', 'Du kan lita på dig själv.', 'Du kan ta dig igenom detta.', 'Du kan ta nästa lilla steg.', 'Du kan försöka igen imorgon.', 'Du kan fortsätta i din takt.', 'Du kan ta pauser och fortsätta sen.', 'Du kan vara snäll mot dig själv.', 'Du kan vara stolt över dig själv.', 'Du kan känna styrka.', 'Du kan hitta mod.', 'Du har rätt att vara modig.', 'Du har rätt att vara stark.', 'Du har rätt att ta tid på dig.', 'Du har rätt att vila ibland.', 'Du har rätt att försöka igen.', 'Du har rätt att känna dig osäker.', 'Du har rätt att ta små steg.', 'Du har rätt att utvecklas långsamt.', 'Du har rätt att vara mänsklig.', 'Du har rätt att växa.', 'Du är stark nog.', 'Du är modig nog.', 'Du räcker till.', 'Du duger även när det är svårt.', 'Du är tillräcklig som du är.', 'Du är bra även när det tar tid.', 'Du är bra även när det går långsamt.', 'Du är bra även när du misslyckas.', 'Du är bra även när du försöker igen.', 'Du är bra även när du lär dig.', 'Du gör framsteg även om du inte märker det.', 'Du blir starkare dag för dag.', 'Du växer lite i taget.', 'Du bygger mod inom dig.', 'Du samlar styrka.', 'Du blir tryggare med tiden.', 'Du blir säkrare på dig själv.', 'Du hittar din väg.', 'Du tar dig framåt.', 'Du är på väg.', 'Du klarar mer än idag.', 'Du klarar mer än igår.', 'Du klarar mer än du tror just nu.', 'Du fortsätter även när det är svårt.', 'Du ger dig själv en chans.', 'Du ger inte upp på dig själv.', 'Du tror på dig själv mer och mer.', 'Du bygger styrka varje dag.', 'Du är modig i stunden.', 'Du är stark just nu.'];
+  const k4 = ['Du är inte ensam.', 'Du hör hemma här.', 'Du är inte bortglömd.', 'Du är inte osynlig.', 'Du räknas.', 'Du är viktig för någon.', 'Du betyder något.', 'Du är sedd.', 'Du är välkommen.', 'Du har en plats.', 'Det finns plats för dig.', 'Du hör till.', 'Du är inte i vägen.', 'Du är inte konstig.', 'Du är inte svår att tycka om.', 'Du är värd vänskap.', 'Du är värd gemenskap.', 'Du är värd att ha någon nära.', 'Du är värd att bli vald.', 'Du är värd att få vara med.', 'Det är okej att känna sig ensam ibland.', 'Många känner sig ensamma ibland.', 'Du är inte ensam om den känslan.', 'Ensamhet betyder inte att något är fel med dig.', 'Det är inte ditt fel att du känner så.', 'Du gör inget fel som känner detta.', 'Det är okej att längta efter någon.', 'Det är okej att vilja höra till.', 'Det är okej att vilja vara med.', 'Det är okej att vilja bli sedd.', 'Du är viktig även när du är ensam.', 'Du är värdefull även när det är tyst.', 'Du är värdefull även när ingen är där.', 'Du är värdefull även när du väntar.', 'Du är värdefull precis nu.', 'Du är värdefull även om det känns tomt.', 'Du är värdefull även om det känns svårt.', 'Du är värdefull även om du känner dig utanför.', 'Du är värdefull även då.', 'Du har ett värde som aldrig försvinner.', 'Du är inte ensam just nu.', 'Du är inte ensam i världen.', 'Det finns människor som bryr sig.', 'Det finns människor som vill dig väl.', 'Det finns någon som tänker på dig.', 'Det finns någon som vill lyssna.', 'Det finns någon som vill vara snäll.', 'Det finns värme omkring dig.', 'Det finns trygghet.', 'Det finns gemenskap.', 'Du förtjänar att höra till.', 'Du förtjänar att känna dig inkluderad.', 'Du förtjänar att bli sedd.', 'Du förtjänar att bli hörd.', 'Du förtjänar att bli bemött snällt.', 'Du förtjänar att känna dig trygg.', 'Du förtjänar att känna tillhörighet.', 'Du förtjänar att vara med.', 'Du förtjänar att bli accepterad.', 'Du förtjänar vänlighet.', 'Du är inte bortvald.', 'Du är inte utanför för alltid.', 'Den här känslan kan ändras.', 'Ensamhet kan komma och gå.', 'Det kommer stunder av gemenskap.', 'Det kommer stunder av närhet.', 'Det kommer människor i din väg.', 'Det kommer varma stunder.', 'Det finns mer än denna stund.', 'Det finns fler dagar.', 'Du är okej även när du känner dig ensam.', 'Du är okej även när det gör ont.', 'Du är okej även när du saknar någon.', 'Du är okej även när det känns tomt.', 'Du är okej även när du längtar.', 'Du är okej även när du väntar.', 'Du är okej även när du är själv.', 'Du är okej även då.', 'Du är okej precis nu.', 'Du är okej här.', 'Du hör hemma i världen.', 'Du har rätt att finnas.', 'Du har rätt att ta plats.', 'Du har rätt att vara du.', 'Du har rätt att höra till.', 'Du har rätt att känna dig välkommen.', 'Du har rätt att känna gemenskap.', 'Du har rätt att vara med.', 'Du har rätt att bli sedd.', 'Du har rätt att bli accepterad.', 'Du är inte ensam i detta ögonblick.', 'Du är inte ensam i dina tankar.', 'Du är inte ensam i dina känslor.', 'Du är inte ensam i din vardag.', 'Du är inte ensam i livet.', 'Du är omgiven av möjligheter till gemenskap.', 'Du är omgiven av framtida möten.', 'Du är omgiven av nya chanser.', 'Du är omgiven av hopp.', 'Du hör till.'];
+  const k5 = ['Det finns hopp.', 'Det kommer bättre stunder.', 'Du är trygg just nu.', 'Du är säker här.', 'Allt behöver inte lösas idag.', 'Du får ta en dag i taget.', 'Imorgon är en ny dag.', 'Det finns ljus framåt.', 'Det finns goda stunder kvar.', 'Det finns snälla dagar.', 'Du behöver inte veta allt nu.', 'Det är okej att ta tid på sig.', 'Du är på väg framåt.', 'Du rör dig framåt i din takt.', 'Det är okej att hoppas.', 'Hopp kan vara litet och ändå räcka.', 'Det finns något gott som väntar.', 'Det finns värme i världen.', 'Det finns trygghet runt dig.', 'Det finns människor som bryr sig.', 'Du är trygg i denna stund.', 'Du är skyddad just nu.', 'Du är omgiven av lugn.', 'Du får andas lugnt.', 'Det är okej att slappna av.', 'Du får vila i stunden.', 'Du är okej här och nu.', 'Inget behöver skyndas.', 'Det finns tid.', 'Du har tid.', 'Det kommer nya chanser.', 'Det kommer nya möjligheter.', 'Det kommer nya dagar.', 'Det kommer nya början.', 'Det finns mer än denna stund.', 'Det finns mer än denna dag.', 'Det finns mer än det som känns svårt.', 'Det finns glädje framöver.', 'Det finns skratt framöver.', 'Det finns lugn framöver.', 'Du får känna trygghet.', 'Du får känna lugn.', 'Du får känna hopp.', 'Du får tro på bättre stunder.', 'Du får längta efter bra saker.', 'Du får drömma.', 'Du får tänka snälla tankar.', 'Du får se framåt.', 'Du får ta det steg för steg.', 'Du får vara i nuet.', 'Du är inte fast i detta för alltid.', 'Den här känslan kommer att ändras.', 'Svåra stunder går över.', 'Lugnare stunder kommer.', 'Det finns en väg vidare.', 'Du kommer hitta din väg.', 'Du kommer hitta lugn.', 'Du kommer känna trygghet igen.', 'Du kommer känna glädje igen.', 'Du kommer känna hopp igen.', 'Du är trygg även när du tvivlar.', 'Du är trygg även när du är rädd.', 'Du är trygg även när det känns osäkert.', 'Du är trygg även när det är nytt.', 'Du är trygg även när du väntar.', 'Du är trygg även när du inte vet.', 'Du är trygg även då.', 'Du är trygg precis nu.', 'Du är trygg här.', 'Du är trygg.', 'Det finns alltid något litet bra.', 'Små ljus räknas.', 'Små glädjeämnen räknas.', 'Små steg framåt räknas.', 'Det lilla är viktigt.', 'Det lilla kan bli stort.', 'Det lilla kan ge hopp.', 'Det lilla kan ge lugn.', 'Det lilla kan räcka.', 'Det räcker just nu.', 'Du har en framtid.', 'Din framtid är öppen.', 'Din framtid är din.', 'Det finns plats för dig framåt.', 'Det finns goda saker i din framtid.', 'Det finns trygghet i din framtid.', 'Det finns glädje i din framtid.', 'Det finns hopp i din framtid.', 'Det finns möjligheter för dig.', 'Det finns vägar för dig.', 'Du är inte ensam i framtiden.', 'Du kommer möta snälla människor.', 'Du kommer ha fina stunder.', 'Du kommer ha lugna stunder.', 'Du kommer ha trygga stunder.', 'Du kommer ha glada stunder.', 'Du kommer känna dig mer trygg.', 'Du kommer känna dig mer lugn.', 'Du kommer känna dig mer hoppfull.', 'Det kommer bli bra.'];
+
+  const grupper = [k1, k2, k3, k4, k5];
+
+  // Fisher–Yates shuffle
+  function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+  }
+
+  grupper.forEach(shuffle);
+
+  let cat = 0;
+  let idx = [0, 0, 0, 0, 0];
+
+  function getNextMessage() {
+    const text = grupper[cat][idx[cat]];
+    idx[cat]++;
+
+    if (idx[cat] >= grupper[cat].length) {
+      idx[cat] = 0;
+      shuffle(grupper[cat]);
+    }
+
+    cat = (cat + 1) % 5;
+    return text;
+  }
+
+  function getRandomColor() {
+    const colors = ["#fef9ef","#ffd6d6","#d6f8ff","#d6ffd6","#fff0d6","#ffd6f0","#e0d6ff"];
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+
+  const box = document.getElementById("messageBox");
+  const btn = document.getElementById("nextBtn");
+
+  btn.addEventListener("click", () => {
+    box.style.opacity = 0;
+    setTimeout(() => {
+      box.textContent = getNextMessage();
+      box.style.background = getRandomColor();
+      box.style.transform = "scale(1.05)";
+      box.style.opacity = 1;
+      setTimeout(() => box.style.transform = "scale(1)", 250);
+    }, 220);
+  });
+</script>
+</body>
+</html>
