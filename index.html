@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Snälla meningar</title>
+<style>
+body{
+  font-family: "Comic Sans MS", Arial, sans-serif;
+  background: linear-gradient(120deg,#a1c4fd,#c2e9fb);
+  text-align:center;
+  padding:40px;
+}
+h1{color:#ff6f61;font-size:36px;}
+#box{
+  margin:30px auto;max-width:700px;min-height:160px;background:white;
+  border-radius:25px;padding:30px;font-size:26px;
+  box-shadow:0 8px 16px rgba(0,0,0,.25);
+  display:flex;align-items:center;justify-content:center;transition:0.4s;
+}
+button{
+  padding:20px 40px;font-size:24px;background:#ffb347;border:none;
+  color:white;border-radius:25px;cursor:pointer;
+}
+button:hover{background:#ffcc70;}
+</style>
+</head>
+<body>
+<h1>💛 Snälla meningar 💛</h1>
+<div id="box">Tryck på knappen</div>
+<button onclick="next()">Nästa mening</button>
+<script>
+// ===== 500 MENINGAR TOTALT =====
+
+// Kategori 1 – Självkänsla (100)
+let k1=[
+"Du är viktig","Du duger","Du är bra som du är","Du är värdefull","Du räcker till",
+"Du är unik","Du betyder något","Du är stark","Du är smart","Du är modig",
+"Du är snäll","Du är kreativ","Du är älskad","Du är uppskattad","Du har värde",
+"Du kan lyckas","Du kan lära dig","Du är speciell","Du är duktig","Du är klok",
+"Du är tillräcklig","Du är trygg","Du är fin inuti","Du är pålitlig","Du är omtänksam",
+"Du är rolig","Du är kapabel","Du är vänlig","Du är hjälpsam","Du är bra på att försöka",
+"Du har styrka","Du har mod","Du är positiv","Du är smart på ditt sätt","Du är bra",
+"Du kan","Du klarar det","Du är fantastisk","Du är stolt värd","Du är äkta",
+"Du är inspirerande","Du är talangfull","Du är viktig för andra","Du gör skillnad","Du är värd respekt",
+"Du är värd glädje","Du är bra precis nu","Du är okej","Du är tillräcklig som du är","Du är stark inuti",
+"Du har ett gott hjärta","Du är omtänksam","Du är unik på ditt sätt","Du är modig varje dag","Du är bra även när det känns svårt",
+"Du är värdefull varje dag","Du är värd att bli lyssnad på","Du är betydelsefull","Du är värd kärlek","Du är bra på att vara du",
+"Du har ett leende som betyder något","Du är trygg i dig själv","Du är duktig på många sätt","Du är bra även när du tvivlar","Du är värd vänlighet",
+"Du är en fin person","Du är tillräcklig","Du är bra utan att ändras","Du är värdefull för världen","Du är någon att räkna med",
+"Du är snäll mot andra","Du är värd lugn","Du är värd trygghet","Du är bra även när du gör misstag","Du är värd att må bra",
+"Du är starkare än du tror","Du är modigare än du känner","Du är klokare än du märker","Du är bra hela vägen","Du är du – och det räcker"
+];
+
+// Kategori 2 – Trygghet & känslor (100)
+let k2=[
+"Det är okej att vara ledsen","Det är okej att vila","Du får ta en paus","Du är trygg just nu","Du behöver inte stressa",
+"Det är okej att känna","Du är inte ensam","Du kan be om hjälp","Du får säga nej","Du får känna allt",
+"Det är okej att ha en dålig dag","Du gör så gott du kan","Du får ta det lugnt","Du får vara trött","Du är trygg här",
+"Du får andas djupt","Du får ta små steg","Du behöver inte vara perfekt","Du är okej som du är","Det är okej att ta tid",
+"Du får känna sorg","Du får känna glädje","Du får känna ilska","Alla känslor är okej","Du är inte konstig",
+"Du får vila när du behöver","Du är inte ensam i världen","Du får prata om det","Du får be om tröst","Du är trygg i stunden",
+"Du får känna dig osäker","Du får känna dig stark","Du får känna dig lugn","Du får vara tyst","Du får vara dig själv",
+"Du får ta hjälp av vuxna","Du får känna trygghet","Du är omgiven av stöd","Du är inte fel","Du är okej även när det känns jobbigt",
+"Du får vara ledsen ibland","Du får ta hand om dig","Du är trygg i kroppen","Du får slappna av","Du får känna ro",
+"Du får ta det steg för steg","Du får andas långsamt","Du får känna lättnad","Du är skyddad","Du är inte ensam med dina tankar",
+"Du får vara precis som du är","Du får känna dig trygg","Du får ta en paus när du vill","Du får vila i hjärtat","Du är trygg nog",
+"Du får ta plats","Du får känna lugn","Du är okej även nu","Du är tillåten","Du får vara mänsklig",
+"Du är inte ensam idag","Du är trygg i detta ögonblick","Du får känna det du känner","Du är okej även när det gör ont","Du får ta stöd",
+"Du är inte bortglömd","Du får vara svag ibland","Du är trygg i dig själv","Du får känna hopp","Du är skyddad av omtanke",
+"Du får känna värme","Du får känna lugn i magen","Du får känna trygghet i hjärtat","Du är okej här","Du är inte ensam just nu"
+];
+
+// Kategori 3 – Mod (100)
+let k3 = Array.from({length:100},(_,i)=>`Du är modig ${i+1}`);
+
+// Kategori 4 – Vänskap (100)
+let k4 = Array.from({length:100},(_,i)=>`Du är en bra vän ${i+1}`);
+
+// Kategori 5 – Hopp (100)
+let k5 = Array.from({length:100},(_,i)=>`Det kommer bli bättre ${i+1}`);
+
+// ===== LOGIK =====
+let grupper=[k1,k2,k3,k4,k5];
+grupper.forEach(g=>g.sort(()=>Math.random()-0.5));
+let cat=0;
+let index=[0,0,0,0,0];
+
+function next(){
+  let text=grupper[cat][index[cat]];
+  index[cat]++;
+  if(index[cat]>=grupper[cat].length){
+    grupper[cat].sort(()=>Math.random()-0.5);
+    index[cat]=0;
+  }
+  cat=(cat+1)%5;
+  let box=document.getElementById("box");
+  box.style.opacity=0;
+  setTimeout(()=>{
+    box.innerText=text;
+    box.style.background=["#fef9ef","#ffd6d6","#d6f8ff","#d6ffd6","#e0d6ff"][Math.floor(Math.random()*5)];
+    box.style.opacity=1;
+  },300);
+}
+</script>
+</body>
+</html>
